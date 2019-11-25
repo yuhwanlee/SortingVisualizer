@@ -2,6 +2,7 @@ import java.awt.*;
 
 public class Line {
     private Color color;
+    private int colorVal;
     private int xStartPixel;
     private int yStartPixel;
     private int currentXPixel;
@@ -17,8 +18,36 @@ public class Line {
         currentXPixel = 0;
         currentYPixel = yStartPixel;
         this.pixelWidth = pixelWidth;
-        addXPixelChange(xStartPixel);
-        addPreviousYPixels(yStartPixel);
+        addXValue(xStartPixel);
+        addYValue(yStartPixel);
+    }
+
+    public Line(Color color, int colorVal, int xStartPixel, int yStartPixel, int pixelWidth) {
+        this.color = color;
+        this.colorVal = colorVal;
+        this.xStartPixel = xStartPixel;
+        this.yStartPixel = yStartPixel;
+        currentXPixel = 0;
+        currentYPixel = yStartPixel;
+        this.pixelWidth = pixelWidth;
+        addXValue(xStartPixel);
+        addYValue(yStartPixel);
+    }
+
+    public int getLastYValue() {
+        return previousYPixels[previousYPixels.length - 1];
+    }
+
+    public int getLastXValue() {
+        return xPixelsAtChanges[xPixelsAtChanges.length - 1];
+    }
+
+    public void setColorVal(int val) {
+        colorVal = val;
+    }
+
+    public int getColorVal() {
+        return colorVal;
     }
 
     public static int[] appendArray(int[] array, int item) {
@@ -38,13 +67,22 @@ public class Line {
         return previousYPixels;
     }
 
-    public void addXPixelChange(int addition) {
+    public void addXValue(int addition) {
         xPixelsAtChanges = appendArray(xPixelsAtChanges, addition);
+
     }
 
-    public void addPreviousYPixels(int addition) {
+    // public void addXPixelChange(int addition) {
+    // xPixelsAtChanges = appendArray(xPixelsAtChanges, addition);
+    // }
+
+    public void addYValue(int addition) {
         previousYPixels = appendArray(previousYPixels, addition);
     }
+
+    // public void addPreviousYPixels(int addition) {
+    // previousYPixels = appendArray(previousYPixels, addition);
+    // }
 
     public void setPixelWidth(int pixelWidth) {
         this.pixelWidth = pixelWidth;
