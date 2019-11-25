@@ -34,60 +34,44 @@ class Panel extends JPanel {
         repaint();
     }
 
+    public static void main(String[] args) {
+        testXChangesArray();
+    }
+
+    public static void testXChangesArray() {
+        Line line = new Line(Color.RED, 0, 200, 10);
+        // line.setCurrentXPixel(0);
+        line.addXPixelChange(300);
+        line.addXPixelChange(500);
+        // line.addXPixelChange(800);
+        line.addPreviousYPixels(700);
+        line.addPreviousYPixels(400);
+        System.out.print("x pixel changes: ");
+        printArray(line.getXPixelsAtChanges());
+        System.out.print("previous y pixels: ");
+        printArray(line.getPreviousYPixels());
+    }
+
+    public static void printArray(int[] arr) {
+        System.out.print("{");
+        for (int i = 0; i < arr.length - 1; i++) {
+            System.out.print(arr[i] + ", ");
+        }
+        System.out.println(arr[arr.length - 1] + "}");
+    }
+
     public void drawLineWidth(Graphics g, Line line) {
         for (int i = 0; i < line.getPixelWidth(); i++) { // for each pixel
-            int[] xChangesAndPixelsBetween = new int[line.getXPixelsAtChanges().length * 2];
-            for (int j = 0; j < line.getXPixelsAtChanges().length; j++) {
-                int[] arr = line.getXPixelsAtChanges();
-                xChangesAndPixelsBetween[j * 2] = arr[j]; // adding the switch pixel length to
-                                                          // each x change
-                xChangesAndPixelsBetween[j * 2 + 1] = arr[j] + SortingVisualizer.pixelsBetweenSwitch;
 
-            }
-            int[] xChanges = Line.appendArray(xChangesAndPixelsBetween, line.getCurrentXPixel());
+            // xpixelchanges and ypixelchanges should be the same sizes
 
-            int[] yPixels = Line.appendArray(line.getPreviousYPixels(), line.getCurrentYPixel());
-            int indexOfFinalXChange = 0;
-            boolean keepGoing = true;
-            // Determining which xChange to graph to
-            for (int j = 0; j < xChanges.length; j++) {
-                if (xChanges[j] > line.getCurrentXPixel() && keepGoing) {
-                    indexOfFinalXChange = j;
-                    keepGoing = false;
-                }
+            int[] xPixelChanges = line.getXPixelsAtChanges();
+            int[] yPixelChanges = line.getPreviousYPixels();
+
+            for (int k = 0; k < xPixelChanges.length - 1; k++) {
+                g.drawLine(xPixelChanges[k], yPixelChanges[k] + i, xPixelChanges[k + 1], yPixelChanges[k + 1] + i);
             }
 
-            boolean diagonalLine = false;
-            int yIndex = 0;
-
-            // ALL IF LAST POINT ISN'T CURRENT Y???
-
-            // graphing every line except the last one
-            // k is the index of the xChanges array
-            for (int k = 0; k < indexOfFinalXChange; k++) {
-                if (k == 0) {
-                    g.drawLine(0, yPixels[yIndex] + i, xChanges[k], yPixels[yIndex] + i);
-                    diagonalLine = true;
-                } else if (diagonalLine) {
-                    g.drawLine(xChanges[k], yPixels[yIndex] + i, xChanges[k + 1], yPixels[yIndex + 1] + i);
-                    yIndex++;
-                    diagonalLine = false;
-                } else {
-                    g.drawLine(xChanges[k], yPixels[yIndex] + i, xChanges[k + 1], yPixels[yIndex] + i);
-                    diagonalLine = true;
-                }
-            }
-            // if the last line
-            if (diagonalLine) {
-                double yDistance = yPixels[yIndex + 1] - yPixels[yIndex];
-                double currentXDistance = line.getCurrentXPixel() - xChanges[indexOfFinalXChange];
-                double xDistance = xChanges[indexOfFinalXChange + 1] - xChanges[indexOfFinalXChange];
-                g.drawLine(xChanges[indexOfFinalXChange], yPixels[yIndex] + i, line.getCurrentXPixel(),
-                        (int) (yDistance * currentXDistance / xDistance) + i);
-            } else {
-                g.drawLine(xChanges[indexOfFinalXChange], yPixels[yIndex] + i, line.getCurrentXPixel(),
-                        yPixels[yIndex] + i);
-            }
             // g.drawLine(0, line.getYStartPixel() + i, line.getCurrentXPixel(),
             // line.getCurrentYPixel() + i);
         }

@@ -7,9 +7,13 @@ public class SortingVisualizer {
 
     public SortingVisualizer() {
         ArrayList<Line> lines = new ArrayList<Line>();
-        Line testLine = new Line(Color.RED, 200, 10);
-        testLine.setCurrentXPixel(200);
-        lines.add(testLine);
+        Line line = new Line(Color.RED, 0, 200, 10);
+        line.addXPixelChange(300);
+        line.addXPixelChange(500);
+        // line.addXPixelChange(800);
+        line.addPreviousYPixels(700);
+        line.addPreviousYPixels(400);
+        lines.add(line);
 
         panel = new Panel(lines);
 

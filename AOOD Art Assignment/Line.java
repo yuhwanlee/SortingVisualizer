@@ -2,6 +2,7 @@ import java.awt.*;
 
 public class Line {
     private Color color;
+    private int xStartPixel;
     private int yStartPixel;
     private int currentXPixel;
     private int currentYPixel;
@@ -9,12 +10,15 @@ public class Line {
     private int[] xPixelsAtChanges = new int[0];
     private int[] previousYPixels = new int[0];
 
-    public Line(Color color, int yStartPixel, int pixelWidth) {
+    public Line(Color color, int xStartPixel, int yStartPixel, int pixelWidth) {
         this.color = color;
+        this.xStartPixel = xStartPixel;
         this.yStartPixel = yStartPixel;
         currentXPixel = 0;
         currentYPixel = yStartPixel;
         this.pixelWidth = pixelWidth;
+        addXPixelChange(xStartPixel);
+        addPreviousYPixels(yStartPixel);
     }
 
     public static int[] appendArray(int[] array, int item) {
@@ -72,6 +76,10 @@ public class Line {
 
     public int getYStartPixel() {
         return yStartPixel;
+    }
+
+    public int getXStartPixel() {
+        return xStartPixel;
     }
 
     public Color getColor() {

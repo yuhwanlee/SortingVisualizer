@@ -32,11 +32,15 @@ public class JustinBCD {
         int digit;
         // digits = new int[1];
         digits = new int[0];
-        while (num > 0) {
+        boolean keepLooping = true;
+        while (num >= 0 && keepLooping == true) {
             digit = num % 10;
             addADigit(digit);
             // digits[1] = digit;
             num = num / 10;
+            if (num == 0) {
+                keepLooping = false;
+            }
         }
     }
 
@@ -64,7 +68,7 @@ public class JustinBCD {
     }
 
     public static void main(String args[]) {
-        JustinBCD first = new JustinBCD(1234);
+        JustinBCD first = new JustinBCD(0);
         printArray(first.digits);
         System.out.println(first.toString());
         JustinBCD second = new JustinBCD(1234567);
