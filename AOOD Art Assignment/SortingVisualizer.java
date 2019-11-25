@@ -9,15 +9,19 @@ public class SortingVisualizer {
         ArrayList<Line> lines = new ArrayList<Line>();
         Line line = new Line(Color.RED, 0, 200, 10);
 
-        line.addXPixelChange(800);
-        line.addPreviousYPixels(400);
-        // line.addXPixelChange(300);
-        // line.addXPixelChange(500);
-        // line.addPreviousYPixels(700);
+        // line.addXPixelChange(800);
         // line.addPreviousYPixels(400);
+        line.addXPixelChange(300);
+        line.addXPixelChange(500);
+        line.addPreviousYPixels(200);
+        line.addPreviousYPixels(400);
 
         lines.add(line);
-
+        for (Line arrayLine : lines) {
+            arrayLine.addXPixelChange(1500);
+            int[] yArray = line.getPreviousYPixels();
+            arrayLine.addPreviousYPixels(yArray[yArray.length - 1]);
+        }
         panel = new Panel(lines);
 
         /*

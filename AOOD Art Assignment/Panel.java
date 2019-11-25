@@ -35,7 +35,7 @@ class Panel extends JPanel {
     }
 
     public static void main(String[] args) {
-        test();
+        // test();
         // testXChangesArray();
     }
 
@@ -55,10 +55,14 @@ class Panel extends JPanel {
     public static void testXChangesArray() {
         Line line = new Line(Color.RED, 0, 200, 10);
         // line.setCurrentXPixel(0);
+        // line.addXPixelChange(300);
+        // line.addXPixelChange(500);
+        // // line.addXPixelChange(800);
+        // line.addPreviousYPixels(700);
+        // line.addPreviousYPixels(400);
         line.addXPixelChange(300);
         line.addXPixelChange(500);
-        // line.addXPixelChange(800);
-        line.addPreviousYPixels(700);
+        line.addPreviousYPixels(200);
         line.addPreviousYPixels(400);
         System.out.print("x pixel changes: ");
         printArray(line.getXPixelsAtChanges());
@@ -83,13 +87,33 @@ class Panel extends JPanel {
             int[] yPixelChanges = line.getPreviousYPixels();
             int highestIndex = 0;
             for (int k = 0; k < xPixelChanges.length; k++) {
-                if (currentX >= xPixelChanges[k]) {
+                if (currentX > xPixelChanges[k]) {
+                    // if (currentX >= xPixelChanges[k]) {
                     highestIndex = k;
+
                 }
             }
-            System.out.println(highestIndex);
-            drawPartialDiagonal(g, xPixelChanges[0], xPixelChanges[1], yPixelChanges[0], yPixelChanges[1], currentX, i);
+            boolean diagonal = false;
+            for (int k = 0; k < highestIndex; k++) {
+                // if (!diagonal) {
+                drawFullLine(g, xPixelChanges[k], xPixelChanges[k + 1], yPixelChanges[k], yPixelChanges[k + 1], i);
+                // }
+                diagonal = !diagonal;
+            }
+            if (diagonal) {
+                drawPartialDiagonal(g, xPixelChanges[highestIndex], xPixelChanges[highestIndex + 1],
+                        yPixelChanges[highestIndex], yPixelChanges[highestIndex + 1], currentX, i);
+            } else {
+                drawPartialHorizontal(g, xPixelChanges[highestIndex], xPixelChanges[highestIndex + 1],
+                        yPixelChanges[highestIndex], yPixelChanges[highestIndex + 1], currentX, i);
+            }
+            // System.out.println(highestIndex);
+            // drawPartialDiagonal(g, xPixelChanges[0], xPixelChanges[1], yPixelChanges[0],
+            // yPixelChanges[1], currentX, i);
             // drawing a diagonal line partially
+
+            // diagonal and horizontal lines alternate
+            // there should be two of each y value
 
             // for (int k = 0; k < xPixelChanges.length - 1; k++) {
             // g.drawLine(xPixelChanges[k], yPixelChanges[k] + i, xPixelChanges[k + 1],
@@ -108,5 +132,22 @@ class Panel extends JPanel {
 
         // int drawY = (xChange * height) / width/* + startY*/;
         g.drawLine(startX, startY + offset, currentX, drawY + offset);
+    }
+
+    public void drawFullLine(Graphics g, int startX, int endX, int startY, int endY, int offset) {
+        g.drawLine(startX, startY + offset, endX, endY + offset);
+    }
+
+    public void drawPartialHorizontal(Graphics g, int startX, int endX, int startY, int endY, int currentX,
+            int offset) {
+        g.drawLine(startX, startY + offset, currentX, endY + offset);
+    }
+
+    public void drawDiagonal(Graphics g, int startX, int endX, int startY, int endY, int offset) {
+
+    }
+
+    public void drawHorizontal(Graphics g, int startX, int endX, int startY, int endY, int offset) {
+
     }
 }
