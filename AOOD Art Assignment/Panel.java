@@ -11,7 +11,7 @@ class Panel extends JPanel {
         frame = new JFrame("art class");
         this.lines = lines;
 
-        this.setPreferredSize(new Dimension(1500, 750));
+        this.setPreferredSize(new Dimension(SortingVisualizer.WINDOW_WIDTH, SortingVisualizer.WINDOW_HEIGHT));
         this.setBackground(Color.WHITE);
         this.setVisible(true);
         frame.add(this);
@@ -55,15 +55,15 @@ class Panel extends JPanel {
     public static void testXChangesArray() {
         Line line = new Line(Color.RED, 0, 200, 10);
         // line.setCurrentXPixel(0);
-        // line.addXPixelChange(300);
-        // line.addXPixelChange(500);
-        // // line.addXPixelChange(800);
-        // line.addPreviousYPixels(700);
-        // line.addPreviousYPixels(400);
-        line.addXPixelChange(300);
-        line.addXPixelChange(500);
-        line.addPreviousYPixels(200);
-        line.addPreviousYPixels(400);
+        // line.addXValue(300);
+        // line.addXValue(500);
+        // // line.addXValue(800);
+        // line.addYValue(700);
+        // line.addYValue(400);
+        line.addXValue(300);
+        line.addXValue(500);
+        line.addYValue(200);
+        line.addYValue(400);
         System.out.print("x pixel changes: ");
         printArray(line.getXPixelsAtChanges());
         System.out.print("previous y pixels: ");
@@ -93,13 +93,12 @@ class Panel extends JPanel {
 
                 }
             }
-            boolean diagonal = false;
             for (int k = 0; k < highestIndex; k++) {
                 // if (!diagonal) {
                 drawFullLine(g, xPixelChanges[k], xPixelChanges[k + 1], yPixelChanges[k], yPixelChanges[k + 1], i);
                 // }
-                diagonal = !diagonal;
             }
+            boolean diagonal = yPixelChanges[highestIndex] != yPixelChanges[highestIndex + 1];
             if (diagonal) {
                 drawPartialDiagonal(g, xPixelChanges[highestIndex], xPixelChanges[highestIndex + 1],
                         yPixelChanges[highestIndex], yPixelChanges[highestIndex + 1], currentX, i);
