@@ -8,11 +8,14 @@ public class SortingVisualizer {
     public SortingVisualizer() {
         ArrayList<Line> lines = new ArrayList<Line>();
         Line line = new Line(Color.RED, 0, 200, 10);
-        line.addXPixelChange(300);
-        line.addXPixelChange(500);
-        // line.addXPixelChange(800);
-        line.addPreviousYPixels(700);
+
+        line.addXPixelChange(800);
         line.addPreviousYPixels(400);
+        // line.addXPixelChange(300);
+        // line.addXPixelChange(500);
+        // line.addPreviousYPixels(700);
+        // line.addPreviousYPixels(400);
+
         lines.add(line);
 
         panel = new Panel(lines);
@@ -23,11 +26,17 @@ public class SortingVisualizer {
          */
 
         Thread thread = new Thread() {
+            int i = 0;
+
             public void run() {
-                for (;;) {
+                for (; i != 1;) {
                     for (Line line : lines) {
                         line.addCurrentXPixel(5);
                     }
+                    if (line.getCurrentXPixel() >= 1500) {
+                        i = 1;
+                    }
+                    System.out.println(line.getCurrentXPixel());
                     try {
                         Thread.sleep(25);
                     } catch (Exception e) {

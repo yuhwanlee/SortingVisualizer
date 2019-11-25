@@ -35,7 +35,21 @@ class Panel extends JPanel {
     }
 
     public static void main(String[] args) {
-        testXChangesArray();
+        test();
+        // testXChangesArray();
+    }
+
+    public static void test() {
+        int startX = 0;
+        int startY = 200;
+        int endX = 800;
+        int endY = 600;
+        int currentX = 400;
+        int height = endY - startY;
+        int width = endX - startX;
+        int xChange = currentX - startX;
+        int drawY = (xChange * height) / width;
+        System.out.println(drawY);
     }
 
     public static void testXChangesArray() {
@@ -64,16 +78,35 @@ class Panel extends JPanel {
         for (int i = 0; i < line.getPixelWidth(); i++) { // for each pixel
 
             // xpixelchanges and ypixelchanges should be the same sizes
-
+            int currentX = line.getCurrentXPixel();
             int[] xPixelChanges = line.getXPixelsAtChanges();
             int[] yPixelChanges = line.getPreviousYPixels();
-
-            for (int k = 0; k < xPixelChanges.length - 1; k++) {
-                g.drawLine(xPixelChanges[k], yPixelChanges[k] + i, xPixelChanges[k + 1], yPixelChanges[k + 1] + i);
+            int highestIndex = 0;
+            for (int k = 0; k < xPixelChanges.length; k++) {
+                if (currentX >= xPixelChanges[k]) {
+                    highestIndex = k;
+                }
             }
+            System.out.println(highestIndex);
+            drawPartialDiagonal(g, xPixelChanges[0], xPixelChanges[1], yPixelChanges[0], yPixelChanges[1], currentX, i);
+            // drawing a diagonal line partially
 
+            // for (int k = 0; k < xPixelChanges.length - 1; k++) {
+            // g.drawLine(xPixelChanges[k], yPixelChanges[k] + i, xPixelChanges[k + 1],
+            // yPixelChanges[k + 1] + i);
+            // }
             // g.drawLine(0, line.getYStartPixel() + i, line.getCurrentXPixel(),
             // line.getCurrentYPixel() + i);
         }
+    }
+
+    public void drawPartialDiagonal(Graphics g, int startX, int endX, int startY, int endY, int currentX, int offset) {
+        int height = endY - startY;
+        int width = endX - startX;
+        int xChange = currentX - startX;
+        int drawY = (xChange * height) / width + startY;
+
+        // int drawY = (xChange * height) / width/* + startY*/;
+        g.drawLine(startX, startY + offset, currentX, drawY + offset);
     }
 }
