@@ -74,24 +74,78 @@ public class SortingVisualizer {
         thread.start();
     }
 
-    public static ArrayList<Line> sortFourBubble() {
-        ArrayList<Line> lines = new ArrayList<Line>();
-        Line blueLine = new Line(Color.BLUE, 4, 0, 150, 5);
-        Line redLine = new Line(Color.RED, 1, 0, 300, 5);
-        Line orangeLine = new Line(Color.ORANGE, 2, 0, 450, 5);
-        Line greenLine = new Line(Color.GREEN, 3, 0, 600, 5);
+    public static Color stringToColor(String color) {
+        if (color.equals("red")) {
+            return Color.RED;
+        }
+        if (color.equals("orange")) {
+            return Color.ORANGE;
+        }
+        if (color.equals("green")) {
+            return Color.GREEN;
+        }
+        if (color.equals("blue")) {
+            return Color.BLUE;
+        }
+        return Color.RED;
+    }
 
-        lines.add(blueLine);
-        lines.add(redLine);
-        lines.add(orangeLine);
-        lines.add(greenLine);
+    public static int stringToIntFour(String color) {
+        if (color.equals("red")) {
+            return 1;
+        }
+        if (color.equals("orange")) {
+            return 2;
+        }
+        if (color.equals("green")) {
+            return 3;
+        }
+        if (color.equals("blue")) {
+            return 4;
+        }
+        return 1;
+    }
+
+    public static ArrayList<Line> sortFourBubble() {
+
+        ArrayList<Line> lines = new ArrayList<Line>();
+        ArrayList<Line> tempLines = new ArrayList<Line>();
+
+        // Line redLine = new Line(Color.RED, 1, 0, 300, 5);
+        // Line orangeLine = new Line(Color.ORANGE, 2, 0, 450, 5);
+        // Line greenLine = new Line(Color.GREEN, 3, 0, 600, 5);
+        // Line blueLine = new Line(Color.BLUE, 4, 0, 150, 5);
+
+        ArrayList<String> colors = new ArrayList<String>();
+        colors.add("red");
+        colors.add("orange");
+        colors.add("green");
+        colors.add("blue");
+        int spaceBetweenLines = WINDOW_HEIGHT / (colors.size() + 1);
+        ArrayList<String> randomColors = new ArrayList<String>();
+        for (int i = 0; i < colors.size(); i++) {
+            int random = (int) (Math.random() * colors.size());
+            randomColors.add(colors.get(random));
+            colors.remove(random);
+        }
+        for (int i = 0; i < randomColors.size(); i++) {
+
+            lines.add(new Line(stringToColor(randomColors.get(i)), stringToIntFour(randomColors.get(i)), 0,
+                    spaceBetweenLines * (i + 1)));
+            tempLines.add(new Line(stringToColor(randomColors.get(i)), stringToIntFour(randomColors.get(i)), 0,
+                    spaceBetweenLines * (i + 1)));
+        }
+        // lines.add(blueLine);
+        // lines.add(redLine);
+        // lines.add(orangeLine);
+        // lines.add(greenLine);
         int totalSwaps = 0;
         int swaps = -1;
-        ArrayList<Line> tempLines = new ArrayList<Line>();
-        tempLines.add(blueLine);
-        tempLines.add(redLine);
-        tempLines.add(orangeLine);
-        tempLines.add(greenLine);
+        // for (int i = 0; i < )
+        // tempLines.add(blueLine);
+        // tempLines.add(redLine);
+        // tempLines.add(orangeLine);
+        // tempLines.add(greenLine);
         // to find number of switches
         while (swaps != 0) {
             swaps = 0;
@@ -102,6 +156,9 @@ public class SortingVisualizer {
                 }
             }
             totalSwaps += swaps;
+        }
+        if (totalSwaps == 0) {
+            totalSwaps = 1;
         }
         pixelsBetweenSwitch = WINDOW_WIDTH / totalSwaps;
         // to edit lines for graphing
