@@ -39,7 +39,8 @@ public class SortingVisualizer {
 
         // lines.add(line2);
         //////////////////////////////
-        ArrayList<Line> lines = sortThreeColors();
+        // ArrayList<Line> lines = sortThreeColors();
+        ArrayList<Line> lines = sortFourBubble();
         /////////////////////////////
 
         // for (Line arrayLine : lines) {
@@ -71,6 +72,76 @@ public class SortingVisualizer {
             }
         };
         thread.start();
+    }
+
+    public static ArrayList<Line> sortFourBubble() {
+        ArrayList<Line> lines = new ArrayList<Line>();
+        Line blueLine = new Line(Color.BLUE, 4, 0, 150, 5);
+        Line redLine = new Line(Color.RED, 1, 0, 300, 5);
+        Line orangeLine = new Line(Color.ORANGE, 2, 0, 450, 5);
+        Line greenLine = new Line(Color.GREEN, 3, 0, 600, 5);
+
+        lines.add(blueLine);
+        lines.add(redLine);
+        lines.add(orangeLine);
+        lines.add(greenLine);
+        int totalSwaps = 0;
+        int swaps = -1;
+        ArrayList<Line> tempLines = new ArrayList<Line>();
+        tempLines.add(blueLine);
+        tempLines.add(redLine);
+        tempLines.add(orangeLine);
+        tempLines.add(greenLine);
+        // to find number of switches
+        while (swaps != 0) {
+            swaps = 0;
+            for (int i = 0; i < tempLines.size() - 1; i++) {
+                if (tempLines.get(i).getColorVal() > tempLines.get(i + 1).getColorVal()) {
+                    swap(tempLines, i, i + 1);
+                    swaps++;
+                }
+            }
+            totalSwaps += swaps;
+        }
+        pixelsBetweenSwitch = WINDOW_WIDTH / totalSwaps;
+        // to edit lines for graphing
+        swaps = -1;
+        int tempIndex1;
+        int tempIndex2;
+        int tempYVal1;
+        int tempYVal2;
+        while (swaps != 0) {
+            swaps = 0;
+            for (int i = 0; i < lines.size() - 1; i++) {
+                tempIndex1 = i;
+                tempIndex2 = i + 1;
+                // System.out.println("tempIndex1 colorval: " +
+                // lines.get(tempIndex1).getColorVal());
+                // System.out.println("tempindex2 colorval: " +
+                // lines.get(tempIndex2).getColorVal());
+                if (lines.get(tempIndex1).getColorVal() > lines.get(tempIndex2).getColorVal()) {
+                    swap(lines, tempIndex1, tempIndex2);
+
+                    tempYVal1 = lines.get(tempIndex1).getLastYValue();
+                    tempYVal2 = lines.get(tempIndex2).getLastYValue();
+
+                    lines.get(tempIndex1).addXValue((i + 1) * pixelsBetweenSwitch);
+                    lines.get(tempIndex1).addYValue(tempYVal2);
+
+                    lines.get(tempIndex2).addXValue((i + 1) * pixelsBetweenSwitch);
+                    lines.get(tempIndex2).addYValue(tempYVal1);
+                    for (int k = 0; k < lines.size(); k++) {
+                        if (k != tempIndex1 && k != tempIndex2) {
+                            lines.get(k).addXValue((i + 1) * pixelsBetweenSwitch);
+                            lines.get(k).addYValue(lines.get(k).getLastYValue());
+                        }
+                    }
+                    swaps++;
+                }
+            }
+        }
+
+        return lines;
     }
 
     public static ArrayList<Line> sortThreeColors() {
