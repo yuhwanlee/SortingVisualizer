@@ -8,8 +8,8 @@ public class Line {
     private int currentXPixel;
     private int currentYPixel;
     private int pixelWidth;
-    private int[] xPixelsAtChanges = new int[0];
-    private int[] previousYPixels = new int[0];
+    private int[] xValues = new int[0];
+    private int[] yValues = new int[0];
 
     public Line(Color color, int xStartPixel, int yStartPixel, int pixelWidth) {
         this.color = color;
@@ -35,11 +35,11 @@ public class Line {
     }
 
     public int getLastYValue() {
-        return previousYPixels[previousYPixels.length - 1];
+        return yValues[yValues.length - 1];
     }
 
     public int getLastXValue() {
-        return xPixelsAtChanges[xPixelsAtChanges.length - 1];
+        return xValues[xValues.length - 1];
     }
 
     public void setColorVal(int val) {
@@ -59,16 +59,22 @@ public class Line {
         return returnArray;
     }
 
-    public int[] getXPixelsAtChanges() {
-        return xPixelsAtChanges;
+    public int[] getXValues() {
+        return xValues;
     }
 
-    public int[] getPreviousYPixels() {
-        return previousYPixels;
+    public int[] getYValues() {
+        return yValues;
     }
+
+    /*
+     * public int[] getXPixelsAtChanges() { return xPixelsAtChanges; }
+     * 
+     * public int[] getPreviousYPixels() { return previousYPixels; }
+     */
 
     public void addXValue(int addition) {
-        xPixelsAtChanges = appendArray(xPixelsAtChanges, addition);
+        xValues = appendArray(xValues, addition);
 
     }
 
@@ -77,7 +83,7 @@ public class Line {
     // }
 
     public void addYValue(int addition) {
-        previousYPixels = appendArray(previousYPixels, addition);
+        yValues = appendArray(yValues, addition);
     }
 
     // public void addPreviousYPixels(int addition) {
