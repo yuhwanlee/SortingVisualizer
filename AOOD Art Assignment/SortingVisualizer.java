@@ -61,7 +61,7 @@ public class SortingVisualizer {
                     if (lines.get(0).getCurrentXPixel() >= WINDOW_WIDTH) {
                         i = 1;
                     }
-                    System.out.println(lines.get(0).getCurrentXPixel());
+                    // System.out.println(lines.get(0).getCurrentXPixel());
                     try {
                         Thread.sleep(25);
                     } catch (Exception e) {
@@ -74,28 +74,75 @@ public class SortingVisualizer {
         thread.start();
     }
 
+    public static Color stringToColor(String color) {
+        if (color.equals("red")) {
+            return Color.RED;
+        }
+        if (color.equals("orange")) {
+            return Color.ORANGE;
+        }
+        if (color.equals("yellow")) {
+            return Color.YELLOW;
+        }
+        if (color.equals("green")) {
+            return Color.GREEN;
+        }
+        if (color.equals("blue")) {
+            return Color.BLUE;
+        }
+        if (color.equals("pink")) {
+            return Color.PINK;
+        }
+        if (color.equals("black")) {
+            return Color.BLACK;
+        }
+        return Color.RED;
+    }
+
+    public static int stringToInt(String color) {
+        if (color.equals("red")) {
+            return 1;
+        }
+        if (color.equals("orange")) {
+            return 2;
+        }
+        if (color.equals("yellow")) {
+            return 3;
+        }
+        if (color.equals("green")) {
+            return 4;
+        }
+        if (color.equals("blue")) {
+            return 5;
+        }
+        if (color.equals("pink")) {
+            return 6;
+        }
+        if (color.equals("black")) {
+            return 7;
+        }
+        return 1;
+    }
+
     public static ArrayList<Line> sortFourBubble() {
         ArrayList<Line> lines = new ArrayList<Line>();
-        Line orangeLine = new Line(Color.ORANGE, 2, 0, 150, 5);
-
-        Line blueLine = new Line(Color.BLUE, 4, 0, 300, 5);
-        Line redLine = new Line(Color.RED, 1, 0, 450, 5);
-        Line greenLine = new Line(Color.GREEN, 3, 0, 600, 5);
-
-        lines.add(orangeLine);
-        lines.add(blueLine);
-        lines.add(redLine);
-        lines.add(greenLine);
-        int totalSwaps = 0;
-        int swaps = -1;
         ArrayList<Line> tempLines = new ArrayList<Line>();
 
-        tempLines.add(orangeLine);
-        tempLines.add(blueLine);
-        tempLines.add(redLine);
-        tempLines.add(greenLine);
+        String[] colors = { "red", "orange", "yellow", "green", "blue", "pink", "black" };
+        int pixelsBetweenLines = WINDOW_HEIGHT / (colors.length + 1);
+        int bound = colors.length;
+        for (int i = 0; i < bound; i++) {
+            int index = (int) (Math.random() * colors.length);
+            lines.add(new Line(stringToColor(colors[index]), stringToInt(colors[index]), 0,
+                    pixelsBetweenLines * (i + 1), 5));
+            tempLines.add(new Line(stringToColor(colors[index]), stringToInt(colors[index]), 0,
+                    pixelsBetweenLines * (i + 1), 5));
+            colors = removeArrayIndex(colors, index);
+        }
 
-        // to find number of switches
+        int totalSwaps = 0;
+        int swaps = -1;
+
         while (swaps != 0) {
             swaps = 0;
             for (int i = 0; i < tempLines.size() - 1; i++) {
@@ -107,6 +154,18 @@ public class SortingVisualizer {
             totalSwaps += swaps;
         }
 
+        // this first time through is done to only determine the pixels between each
+        // switch
+        if (totalSwaps == 0) {
+            totalSwaps = 1;
+            pixelsBetweenSwitch = WINDOW_WIDTH / totalSwaps;
+            for (int k = 0; k < lines.size(); k++) {
+
+                lines.get(k).addXValue(WINDOW_WIDTH);
+                lines.get(k).addYValue(lines.get(k).getLastYValue());
+
+            }
+        }
         pixelsBetweenSwitch = WINDOW_WIDTH / totalSwaps;
 
         swaps = -1;
@@ -114,10 +173,13 @@ public class SortingVisualizer {
         int tempIndex2;
         int tempYVal1;
         int tempYVal2;
-        int indexOfX = 0;
+        int indexOfX = 1;
+        // actual sorting and proper pixel values
         while (swaps != 0) {
 
             swaps = 0;
+            // loops through each line, switches it and the next one if the order is not
+            // correct
             for (int i = 0; i < lines.size() - 1; i++) {
                 tempIndex1 = i;
                 tempIndex2 = i + 1;
@@ -144,11 +206,21 @@ public class SortingVisualizer {
                         }
                     }
                     swaps++;
-                }
-                indexOfX++;
+                    indexOfX++;
 
+                }
             }
 
+        }
+        // done in case rounding errors at the end gives an error
+        for (Line line : lines) {
+            if (line.getLastXValue() != WINDOW_WIDTH) {
+                line.addXValue(WINDOW_WIDTH);
+                line.addYValue(line.getLastYValue());
+            }
+        }
+        for (Line line : lines) {
+            System.out.println(line);
         }
 
         return lines;
@@ -221,87 +293,44 @@ public class SortingVisualizer {
         lines.set(index2, temp);
     }
 
+    public static String[] removeArrayIndex(String[] array, int index) {
+        String[] returnArray = new String[array.length - 1];
+        for (int i = 0; i < index; i++) {
+            returnArray[i] = array[i];
+        }
+        for (int i = index; i < array.length - 1; i++) {
+            returnArray[i] = array[i + 1];
+        }
+        return returnArray;
+    }
+
     public static void testingBubbleSort() {
-        ArrayList<Line> lines = new ArrayList<Line>();
-        Line orangeLine = new Line(Color.ORANGE, 2, 0, 150, 5);
+        int count = 0;
+        for (int k = 0; k < 10000; k++) {
+            ArrayList<Line> lines = new ArrayList<Line>();
+            ArrayList<Line> tempLines = new ArrayList<Line>();
 
-        Line blueLine = new Line(Color.BLUE, 4, 0, 300, 5);
-        Line redLine = new Line(Color.RED, 1, 0, 450, 5);
-        Line greenLine = new Line(Color.GREEN, 3, 0, 600, 5);
-
-        lines.add(orangeLine);
-        lines.add(blueLine);
-        lines.add(redLine);
-        lines.add(greenLine);
-        int totalSwaps = 0;
-        int swaps = -1;
-        ArrayList<Line> tempLines = new ArrayList<Line>();
-
-        tempLines.add(orangeLine);
-        tempLines.add(blueLine);
-        tempLines.add(redLine);
-        tempLines.add(greenLine);
-
-        // to find number of switches
-        while (swaps != 0) {
-            swaps = 0;
-            for (int i = 0; i < tempLines.size() - 1; i++) {
-                if (tempLines.get(i).getColorVal() > tempLines.get(i + 1).getColorVal()) {
-                    swap(tempLines, i, i + 1);
-                    swaps++;
-                }
+            String[] colors = { "red", "orange", "green", "blue", "pink", "black" };
+            int pixelsBetweenLines = WINDOW_HEIGHT / (colors.length + 1);
+            int bound = colors.length;
+            for (int i = 0; i < bound; i++) {
+                int index = (int) (Math.random() * colors.length);
+                lines.add(new Line(stringToColor(colors[index]), stringToInt(colors[index]), 0,
+                        pixelsBetweenLines * (i + 1), 5));
+                tempLines.add(new Line(stringToColor(colors[index]), stringToInt(colors[index]), 0,
+                        pixelsBetweenLines * (i + 1), 5));
+                colors = removeArrayIndex(colors, index);
             }
-            totalSwaps += swaps;
-        }
-
-        pixelsBetweenSwitch = WINDOW_WIDTH / totalSwaps;
-
-        swaps = -1;
-        int tempIndex1;
-        int tempIndex2;
-        int tempYVal1;
-        int tempYVal2;
-        int indexOfX = 0;
-        while (swaps != 0) {
-
-            swaps = 0;
-            for (int i = 0; i < lines.size() - 1; i++) {
-                tempIndex1 = i;
-                tempIndex2 = i + 1;
-                // System.out.println("tempIndex1 colorval: " +
-                // lines.get(tempIndex1).getColorVal());
-                // System.out.println("tempindex2 colorval: " +
-                // lines.get(tempIndex2).getColorVal());
-                if (lines.get(tempIndex1).getColorVal() > lines.get(tempIndex2).getColorVal()) {
-
-                    swap(lines, tempIndex1, tempIndex2);
-
-                    tempYVal1 = lines.get(tempIndex1).getLastYValue();
-                    tempYVal2 = lines.get(tempIndex2).getLastYValue();
-
-                    lines.get(tempIndex1).addXValue((indexOfX) * pixelsBetweenSwitch);
-                    lines.get(tempIndex1).addYValue(tempYVal2);
-
-                    lines.get(tempIndex2).addXValue((indexOfX) * pixelsBetweenSwitch);
-                    lines.get(tempIndex2).addYValue(tempYVal1);
-                    for (int k = 0; k < lines.size(); k++) {
-                        if (k != tempIndex1 && k != tempIndex2) {
-                            lines.get(k).addXValue((indexOfX) * pixelsBetweenSwitch);
-                            lines.get(k).addYValue(lines.get(k).getLastYValue());
-                        }
-                    }
-                    swaps++;
-                }
-                indexOfX++;
-
+            if (lines.get(5).getColorVal() == 7) {
+                count++;
             }
-
         }
-
+        System.out.println((double) count / 10000);
     }
 
     public static void main(String[] args) {
         SortingVisualizer obj = new SortingVisualizer();
+
         // testingBubbleSort();
         // ArrayList<Line> lines = new ArrayList<Line>();
         // Line redLine = new Line(Color.RED, 1, 0, 375, 5);

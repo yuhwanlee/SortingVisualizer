@@ -98,6 +98,12 @@ class Panel extends JPanel {
                 drawFullLine(g, xPixelChanges[k], xPixelChanges[k + 1], yPixelChanges[k], yPixelChanges[k + 1], i);
                 // }
             }
+            // boolean diagonal;
+            // if (highestIndex + 1 >= yPixelChanges.length) {
+            // diagonal = false;
+            // } else {
+            // diagonal = yPixelChanges[highestIndex] != yPixelChanges[highestIndex + 1];
+            // }
             boolean diagonal = yPixelChanges[highestIndex] != yPixelChanges[highestIndex + 1];
             if (diagonal) {
                 drawPartialDiagonal(g, xPixelChanges[highestIndex], xPixelChanges[highestIndex + 1],
