@@ -65,9 +65,9 @@ class Panel extends JPanel {
         line.addYValue(200);
         line.addYValue(400);
         System.out.print("x pixel changes: ");
-        printArray(line.getXPixelsAtChanges());
+        printArray(line.getXValues());
         System.out.print("previous y pixels: ");
-        printArray(line.getPreviousYPixels());
+        printArray(line.getYValues());
     }
 
     public static void printArray(int[] arr) {
@@ -83,8 +83,8 @@ class Panel extends JPanel {
 
             // xpixelchanges and ypixelchanges should be the same sizes
             int currentX = line.getCurrentXPixel();
-            int[] xPixelChanges = line.getXPixelsAtChanges();
-            int[] yPixelChanges = line.getPreviousYPixels();
+            int[] xPixelChanges = line.getXValues();
+            int[] yPixelChanges = line.getYValues();
             int highestIndex = 0;
             for (int k = 0; k < xPixelChanges.length; k++) {
                 if (currentX > xPixelChanges[k]) {
