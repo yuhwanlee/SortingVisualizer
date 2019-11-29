@@ -129,4 +129,19 @@ public class Line {
     public Color getColor() {
         return color;
     }
+
+    public static String arrayToString(int[] arr) {
+        String returnString = "";
+        returnString += "{";
+        for (int i = 0; i < arr.length - 1; i++) {
+            returnString += arr[i] + ", ";
+        }
+        returnString += arr[arr.length - 1] + "}";
+        return returnString;
+    }
+
+    public String toString() {
+        return "colorVal: " + Integer.toString(colorVal) + ", yStartPixel: " + Integer.toString(yStartPixel)
+                + ", xValues: " + arrayToString(xValues) + ", yValues: " + arrayToString(yValues);
+    }
 }
