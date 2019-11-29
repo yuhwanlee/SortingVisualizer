@@ -93,11 +93,19 @@ class Panel extends JPanel {
 
                 }
             }
+
+            /*
+             * for (int k = 0; k < highestIndex; k++) { // if (!diagonal) { drawFullLine(g,
+             * xPixelChanges[k], xPixelChanges[k + 1], yPixelChanges[k], yPixelChanges[k +
+             * 1], i); // } }
+             */
+
             for (int k = 0; k < highestIndex; k++) {
                 // if (!diagonal) {
                 drawFullLine(g, xPixelChanges[k], xPixelChanges[k + 1], yPixelChanges[k], yPixelChanges[k + 1], i);
                 // }
             }
+
             // boolean diagonal;
             // if (highestIndex + 1 >= yPixelChanges.length) {
             // diagonal = false;
@@ -137,11 +145,21 @@ class Panel extends JPanel {
 
         // int drawY = (xChange * height) / width/* + startY*/;
         g.drawLine(startX, startY + offset, currentX, drawY + offset);
+        /*
+         * g.drawLine(startX + offset, startY + offset, currentX + offset, drawY +
+         * offset);
+         */
     }
 
     public void drawFullLine(Graphics g, int startX, int endX, int startY, int endY, int offset) {
         g.drawLine(startX, startY + offset, endX, endY + offset);
     }
+
+    /*
+     * public void drawFullLine(Graphics g, int startX, int endX, int startY, int
+     * endY, int offset) { g.drawLine(startX + offset, startY + offset, endX +
+     * offset, endY + offset); }
+     */
 
     public void drawPartialHorizontal(Graphics g, int startX, int endX, int startY, int endY, int currentX,
             int offset) {
