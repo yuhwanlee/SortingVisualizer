@@ -67,6 +67,9 @@ public class Line {
         return yValues;
     }
 
+    public void duplicateLastYValue() {
+        yValues = appendArray(yValues, getLastYValue());
+    }
     /*
      * public int[] getXPixelsAtChanges() { return xPixelsAtChanges; }
      * 
