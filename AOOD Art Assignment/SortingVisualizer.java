@@ -9,7 +9,7 @@ public class SortingVisualizer {
 
     public SortingVisualizer() {
 
-        ArrayList<Line> lines = Sorts.selectionSort();
+        ArrayList<Line> lines = Sorts.cocktailSort();
 
         panel = new Panel(lines);
 
@@ -129,7 +129,7 @@ public class SortingVisualizer {
         String[] worstCaseColors = { "black", "black", "pink", "pink", "blue", "blue", "green", "green", "yellow",
                 "yellow", "orange", "orange", "red", "red" };
 
-        int pixelsBetweenLines = WINDOW_HEIGHT / (colors.length + 1);
+        int pixelsBetweenLines = SortingVisualizer.WINDOW_HEIGHT / (colors.length + 1);
         lines = makeRandomLines(colors);
         tempLines = copyArrayList(lines);
 
@@ -293,6 +293,38 @@ public class SortingVisualizer {
         return array;
     }
 
+    public static int[] cocktailSortIntArray(int[] array) {
+        int swaps = -1;
+        int totalSwaps = 0;
+        int start = 0;
+        int end = array.length - 1;
+        printArray(array);
+        while (swaps != 0) {
+            swaps = 0;
+            // forwards
+            for (int i = start; i < end; i++) {
+                if (array[i] > array[i + 1]) {
+                    swap(array, i, i + 1);
+                    swaps++;
+                }
+            }
+            printArray(array);
+            end--;
+            // backwards
+            for (int i = end; i > start; i--) {
+                if (array[i] < array[i - 1]) {
+                    swap(array, i, i - 1);
+                    swaps++;
+                }
+            }
+            printArray(array);
+            start++;
+            totalSwaps += swaps;
+        }
+        System.out.println("totalSwaps: " + totalSwaps);
+        return array;
+    }
+
     public static void swap(ArrayList<Line> lines, int index1, int index2) {
         Line temp = lines.get(index1);
         lines.set(index1, lines.get(index2));
@@ -385,7 +417,7 @@ public class SortingVisualizer {
 
     public static void main(String[] args) {
         SortingVisualizer obj = new SortingVisualizer();
-        // printArray(selectionSortIntArray(new int[] { 3, 2, 5, 1, 4 }));
+        // printArray(cocktailSortIntArray(new int[] { 5, 4, 3, 2, 1 }));
         // printArray(insertionSortIntArray(new int[] { 6, 5, 4, 3, 2, 1 }));
         // testingSort();
     }
