@@ -4,6 +4,132 @@ import java.util.*;
 public class Sorts {
     public static int pixelsBetweenSwitch;
 
+    public static ArrayList<Line> gnomeSort() {
+        ArrayList<Line> lines = new ArrayList<Line>();
+        ArrayList<Line> tempLines = new ArrayList<Line>();
+        // String[] colors = { "red", "orange", "yellow", "green", "blue" };
+        /*
+         * String[] colors = { "red", "red", "orange", "orange", "yellow", "yellow",
+         * "green", "green", "blue", "blue", "pink", "pink", "black", "black" };
+         */
+        String[] colors = { "red", "orange", "yellow", "green", "blue", "pink", "black", "red", "orange", "yellow",
+                "green", "blue", "pink", "black", "red", "orange", "yellow", "green", "blue", "pink", "black", "red",
+                "orange", "yellow", "green", "blue", "pink", "black" };
+
+        String[] worstCaseColors = { "black", "black", "pink", "pink", "blue", "blue", "green", "green", "yellow",
+                "yellow", "orange", "orange", "red", "red" };
+
+        int pixelsBetweenLines = SortingVisualizer.WINDOW_HEIGHT / (colors.length + 1);
+        lines = makeRandomLines(colors);
+        tempLines = copyArrayList(lines);
+
+        int totalSwaps = 0;
+
+        int index = 0;
+        while (index < tempLines.size() - 1) {
+            if (index == 0) {
+                if (tempLines.get(index).getColorVal() > tempLines.get(index + 1).getColorVal()) {
+                    swap(tempLines, index, index + 1);
+                    totalSwaps++;
+                }
+                index++;
+            } else {
+                if (tempLines.get(index).getColorVal() > tempLines.get(index + 1).getColorVal()) {
+                    swap(tempLines, index, index + 1);
+                    index--;
+                    totalSwaps++;
+                } else {
+                    index++;
+                }
+            }
+        }
+        // this first time through is done to only determine the pixels between each
+        // switch
+        // if there are no swaps, make sure it draws to the end
+        if (totalSwaps == 0) {
+            totalSwaps = 1;
+            pixelsBetweenSwitch = SortingVisualizer.WINDOW_WIDTH / totalSwaps;
+            for (int k = 0; k < lines.size(); k++) {
+
+                lines.get(k).addXValue(SortingVisualizer.WINDOW_WIDTH);
+                lines.get(k).addYValue(lines.get(k).getLastYValue());
+
+            }
+        }
+        pixelsBetweenSwitch = SortingVisualizer.WINDOW_WIDTH / totalSwaps;
+
+        int tempIndex1;
+        int tempIndex2;
+        int tempYVal1;
+        int tempYVal2;
+        // index of xPixel is the index of which # switch it is
+        int indexOfX = 1;
+        // actual sorting and proper pixel values
+
+        int i = 0;
+        while (i < lines.size() - 1) {
+            if (i == 0) {
+                if (lines.get(i).getColorVal() > lines.get(i + 1).getColorVal()) {
+
+                    tempYVal1 = lines.get(i).getLastYValue();
+                    tempYVal2 = lines.get(i + 1).getLastYValue();
+                    lines.get(i).addYValue(tempYVal2);
+                    lines.get(i + 1).addYValue(tempYVal1);
+
+                    swap(lines, i, i + 1);
+
+                    for (Line line : lines) { // every line gets the same new xvalue
+                        line.addXValue(pixelsBetweenSwitch * indexOfX);
+                    }
+                    indexOfX++;
+
+                    for (int k = 0; k < lines.size(); k++) {
+                        if (k != i && k != i + 1) {
+                            lines.get(k).duplicateLastYValue();
+                        }
+                    }
+                }
+                i++;
+            } else {
+                if (lines.get(i).getColorVal() > lines.get(i + 1).getColorVal()) {
+                    tempYVal1 = lines.get(i).getLastYValue();
+                    tempYVal2 = lines.get(i + 1).getLastYValue();
+                    lines.get(i).addYValue(tempYVal2);
+                    lines.get(i + 1).addYValue(tempYVal1);
+
+                    swap(lines, i, i + 1);
+                    for (Line line : lines) { // every line gets the same new xvalue
+                        line.addXValue(pixelsBetweenSwitch * indexOfX);
+                    }
+                    indexOfX++;
+
+                    for (int k = 0; k < lines.size(); k++) {
+                        if (k != i && k != i + 1) {
+                            lines.get(k).duplicateLastYValue();
+                        }
+                    }
+                    i--;
+
+                } else {
+                    i++;
+                }
+            }
+        }
+
+        // done in case rounding errors at the end gives an error
+        for (Line line : lines) {
+            if (line.getLastXValue() != SortingVisualizer.WINDOW_WIDTH) {
+                line.addXValue(SortingVisualizer.WINDOW_WIDTH);
+                line.addYValue(line.getLastYValue());
+            }
+        }
+        for (Line line : lines) {
+            System.out.println(line);
+        }
+
+        return lines;
+    }
+
     public static ArrayList<Line> cocktailSort() {
         ArrayList<Line> lines = new ArrayList<Line>();
         ArrayList<Line> tempLines = new ArrayList<Line>();

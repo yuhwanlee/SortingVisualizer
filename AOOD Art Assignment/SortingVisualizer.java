@@ -9,7 +9,7 @@ public class SortingVisualizer {
 
     public SortingVisualizer() {
 
-        ArrayList<Line> lines = Sorts.cocktailSort();
+        ArrayList<Line> lines = Sorts.gnomeSort();
 
         panel = new Panel(lines);
 
@@ -325,6 +325,26 @@ public class SortingVisualizer {
         return array;
     }
 
+    public static int[] gnomeSortIntArray(int[] array) {
+        int index = 0;
+        while (index < array.length - 1) {
+            if (index == 0) {
+                if (array[index] > array[index + 1]) {
+                    swap(array, index, index + 1);
+                }
+                index++;
+            } else {
+                if (array[index] > array[index + 1]) {
+                    swap(array, index, index + 1);
+                    index--;
+                } else {
+                    index++;
+                }
+            }
+        }
+        return array;
+    }
+
     public static void swap(ArrayList<Line> lines, int index1, int index2) {
         Line temp = lines.get(index1);
         lines.set(index1, lines.get(index2));
@@ -417,7 +437,7 @@ public class SortingVisualizer {
 
     public static void main(String[] args) {
         SortingVisualizer obj = new SortingVisualizer();
-        // printArray(cocktailSortIntArray(new int[] { 5, 4, 3, 2, 1 }));
+        // printArray(gnomeSortIntArray(new int[] { 5, 4, 3, 2, 1 }));
         // printArray(insertionSortIntArray(new int[] { 6, 5, 4, 3, 2, 1 }));
         // testingSort();
     }
