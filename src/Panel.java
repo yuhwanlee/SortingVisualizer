@@ -6,9 +6,10 @@ import javax.swing.*;
 
 class Panel extends JPanel {
     private JFrame frame;
-    private JComboBox sortsBox;
-    private String[] sorts = {"bubbleSort", "insertionSort", "selectionSort", "cocktailSort", "gnomeSort", "mergeSort", "combSort"};
-
+    public static JComboBox sortsBox;
+    private String[] sorts = {"Sort", "bubbleSort", "insertionSort", "selectionSort", "cocktailSort", "gnomeSort", "mergeSort", "combSort"};
+    public static JComboBox sortOrder;
+    private String[] orders = {"random", "reverse"};
 
 
     public Panel(/*ArrayList<Line> lines*/) {
@@ -20,10 +21,14 @@ class Panel extends JPanel {
         this.setPreferredSize(new Dimension(SortingVisualizer.WINDOW_WIDTH, SortingVisualizer.WINDOW_HEIGHT));
         this.setBackground(Color.WHITE);
         this.setVisible(true);
+
         sortsBox = new JComboBox(sorts);
         sortsBox.addActionListener(listener);
-
         this.add(sortsBox);
+        sortOrder = new JComboBox(orders);
+        sortOrder.addActionListener(listener);
+        this.add(sortOrder);
+
         frame.add(this);
         // graphFrame.setSize(new Dimension(windowSizeX, windowSizeY));
         // graphFrame.setResizable(false);
@@ -38,12 +43,14 @@ class Panel extends JPanel {
     }*/
 
     public void paintComponent(Graphics g) {
-        super.paintComponent(g); //maybe breaks
-        for (Line line : SortingVisualizer.lines) {
-            g.setColor(line.getColor());
-            drawLineWidth(g, line);
+        if (!sortsBox.getSelectedItem().equals("Sort")) {
+            super.paintComponent(g); //maybe breaks
+            for (Line line : SortingVisualizer.lines) {
+                g.setColor(line.getColor());
+                drawLineWidth(g, line);
+            }
+            repaint();
         }
-        repaint();
     }
 
     public static void main(String[] args) {

@@ -9,11 +9,11 @@ public class SortingVisualizer {
     public static ArrayList<Line> lines;
 
     public SortingVisualizer() {
-
+        panel = new Panel();
         //ArrayList<Line> lines = Sorts.combSort();
 
         //panel = new Panel(lines);
-        lines = Sorts.bubbleSort();
+        /*lines = Sorts.bubbleSort();
 
         panel = new Panel();
 
@@ -27,9 +27,9 @@ public class SortingVisualizer {
                         line.addCurrentXPixel(5);
                         //System.out.println(line);
                     }
-                    /*if (lines.get(0).getCurrentXPixel() >= WINDOW_WIDTH) {
+                    *//*if (lines.get(0).getCurrentXPixel() >= WINDOW_WIDTH) {
                         i = 1;
-                    }*/
+                    }*//*
                     // System.out.println(lines.get(0).getCurrentXPixel());
                     try {
                         Thread.sleep(25);
@@ -40,7 +40,7 @@ public class SortingVisualizer {
                 }
             }
         };
-        thread.start();
+        thread.start();*/
     }
 
     public static Color stringToColor(String color) {

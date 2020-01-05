@@ -9,44 +9,23 @@ public class Sorts {
     public static final int LINE_WIDTH = 3;
     public static final String[] COLORS = {"red", "orange", "yellow", "green", "darkGreen",
             "aquamarine", "blue", "purple", "pink", "gray", "black"};
-    /*public static boolean[] incrementIndex = new boolean[0];
-    public static int booleanIndex = 0;*/
 
     public static ArrayList<Line> combSort() {
+        String order = (String) Panel.sortOrder.getSelectedItem();
+
         ArrayList<Line> lines = new ArrayList<Line>();
         ArrayList<Line> tempLines = new ArrayList<Line>();
 
-        /*String[] colors = { "red", "orange", "yellow", "green", "aquamarine", "blue", "purple", "pink", "gray",  "black",
-        		 "red", "orange", "yellow", "green", "aquamarine", "blue", "purple", "pink", "gray",  "black" ,
-        		 "red", "orange", "yellow", "green", "aquamarine", "blue", "purple", "pink", "gray",  "black" ,
-        		 "red", "orange", "yellow", "green", "aquamarine", "blue", "purple", "pink", "gray",  "black" ,
-        		 "red", "orange", "yellow", "green", "aquamarine", "blue", "purple", "pink", "gray",  "black"  ,
-        		 "red", "orange", "yellow", "green", "aquamarine", "blue", "purple", "pink", "gray",  "black" ,
-        		 "red", "orange", "yellow", "green", "aquamarine", "blue", "purple", "pink", "gray",  "black",
-        		 "red", "orange", "yellow", "green", "aquamarine", "blue", "purple", "pink", "gray",  "black",
-        		 "red", "orange", "yellow", "green", "aquamarine", "blue", "purple", "pink", "gray",  "black",
-        		 "red", "orange", "yellow", "green", "aquamarine", "blue", "purple", "pink", "gray",  "black",
-        		 "red", "orange", "yellow", "green", "aquamarine", "blue", "purple", "pink", "gray",  "black",
-        		 "red", "orange", "yellow", "green", "aquamarine", "blue", "purple", "pink", "gray",  "black",
-        		 "red", "orange", "yellow", "green", "aquamarine", "blue", "purple", "pink", "gray",  "black",
-        		 "red", "orange", "yellow", "green", "aquamarine", "blue", "purple", "pink", "gray",  "black",
-        		 };*/
+        String[] colors;
+        if (order.equals("random")) {
+            colors = returnColorsTimes(5);
+            lines = makeRandomLines(colors);
+        } else {
+            colors = returnReverseColorsTimes(5);
+            lines = makeLinesInOrder(colors);
+        }
 
-
-       /* String[] colors = { "red", "orange", "yellow", "green", "aquamarine",  "blue", "purple", "pink", "gray", "black",
-          		 "red", "orange", "yellow", "green", "aquamarine",  "blue", "purple", "pink", "gray", "black",
-          		 "red", "orange", "yellow", "green", "aquamarine",  "blue", "purple", "pink", "gray", "black",
-          		 "red", "orange", "yellow", "green", "aquamarine",  "blue", "purple", "pink", "gray", "black",
-          		 "red", "orange", "yellow", "green", "aquamarine",  "blue", "purple", "pink", "gray", "black",
-          		 "red", "orange", "yellow", "green", "aquamarine",  "blue", "purple", "pink", "gray", "black",
-          		 "red", "orange", "yellow", "green", "aquamarine",  "blue", "purple", "pink", "gray", "black",
-          		 "red", "orange", "yellow", "green", "aquamarine",  "blue", "purple", "pink", "gray", "black",
-           		};*/
-        String[] colors = returnColorsTimes(8);
-
-        //String[] colors = { "red", "orange", "yellow", "green", "aquamarine", "blue", "purple", "pink", "gray", "black" };
         int pixelsBetweenLines = SortingVisualizer.WINDOW_HEIGHT / (colors.length + 1);
-        lines = makeRandomLines(colors);
         tempLines = copyArrayList(lines);
 
         int totalSwaps = 0;
@@ -95,16 +74,9 @@ public class Sorts {
         while (swaps != 0 || gap > 1) {
 
             swaps = 0;
-            // loops through each line, switches it and the next one if the order is not
-            // correct
             for (int i = 0; i < lines.size() - gap; i++) {
                 tempIndex1 = i;
-                // MAKE TEMPINDEX2 THE INDEX YOU'RE COMPARING
                 tempIndex2 = i + gap;
-                // System.out.println("tempIndex1 colorval: " +
-                // lines.get(tempIndex1).getColorVal());
-                // System.out.println("tempindex2 colorval: " +
-                // lines.get(tempIndex2).getColorVal());
                 if (lines.get(tempIndex1).getColorVal() > lines.get(tempIndex2).getColorVal()) {
 
                     // REST OF THIS CODE IS SWAPPING
@@ -149,32 +121,21 @@ public class Sorts {
 
 
     public static ArrayList<Line> mergeSort() {
+        String order = (String) Panel.sortOrder.getSelectedItem();
+
         ArrayList<Line> lines = new ArrayList<Line>();
         ArrayList<Line> tempLines = new ArrayList<Line>();
 
-       /* String[] colors = { "red", "red", "orange", "orange", "yellow", "yellow", "green", "green", "blue", "blue",
-                "pink", "pink", "black", "black" };*/
-        // String[] colors = { "red", "red", "orange", "blue", "pink", "black" };
-        //String[] colors = { "red", "orange", "yellow", "green", "blue", "pink", "black" };
+        String[] colors;
 
-        /*String[] colors = { "red", "orange", "yellow", "green", "aquamarine",  "blue", "purple", "pink", "gray", "black",
-        		"red", "orange", "yellow", "green",  "aquamarine", "blue", "purple", "pink", "gray", "black",
-        		"red", "orange", "yellow", "green", "aquamarine",  "blue", "purple", "pink", "gray", "black",
-        		"red", "orange", "yellow", "green", "aquamarine",  "blue", "purple", "pink", "gray", "black" ,
-                "red", "orange", "yellow", "green", "aquamarine",  "blue", "purple", "pink", "gray", "black",
-        		"red", "orange", "yellow", "green", "aquamarine",  "blue", "purple", "pink", "gray", "black" ,
-                "red", "orange", "yellow", "green", "aquamarine",  "blue", "purple", "pink", "gray", "black",
-        		"red", "orange", "yellow", "green", "aquamarine",  "blue", "purple", "pink", "gray", "black" ,
-                "red", "orange", "yellow", "green", "aquamarine",  "blue", "purple", "pink", "gray", "black"};*/
-        String[] colors = returnColorsTimes(8);  // TODO: crashes at 9
-       /* String[] colors = { "red", "orange", "yellow", "green", "aquamarine",  "blue", "purple", "pink", "gray", "black",
-
-        };*/
-        String[] worstCaseColors = { "black", "black", "pink", "pink", "blue", "blue", "green", "green", "yellow",
-                "yellow", "orange", "orange", "red", "red" };
-
+        if (order.equals("random")) {
+            colors = returnColorsTimes(8);  // TODO: crashes at 9
+            lines = makeRandomLines(colors);
+        } else {
+            colors = returnReverseColorsTimes(8);
+            lines = makeLinesInOrder(colors);
+        }
         int pixelsBetweenLines = SortingVisualizer.WINDOW_HEIGHT / (colors.length + 1);
-        lines = makeRandomLines(colors);
         tempLines = copyArrayList(lines);
 
 
@@ -410,26 +371,25 @@ public class Sorts {
         array[index2] = temp;
     }
 
-    public static ArrayList<Line> gnomeSort() {
+    public static ArrayList<Line> gnomeSort() {  // TODO: gnome sort reverse doesn't work
+        String order = (String) Panel.sortOrder.getSelectedItem();
+
         ArrayList<Line> lines = new ArrayList<Line>();
         ArrayList<Line> tempLines = new ArrayList<Line>();
-        // String[] colors = { "red", "orange", "yellow", "green", "blue" };
-        /*
-         * String[] colors = { "red", "red", "orange", "orange", "yellow", "yellow",
-         * "green", "green", "blue", "blue", "pink", "pink", "black", "black" };
-         */
-        /*String[] colors = { "red", "orange", "yellow", "green", "aquamarine",  "blue", "purple", "pink", "black",
-                "red", "orange", "yellow", "green",  "aquamarine", "blue", "purple", "pink", "black",
-                "red", "orange", "yellow", "green", "aquamarine",  "blue", "purple", "pink", "black",
-                "red", "orange", "yellow", "green", "aquamarine",  "blue", "purple", "pink", "black" ,
-                "red", "orange", "yellow", "green", "aquamarine",  "blue", "purple", "pink", "black",
-                "red", "orange", "yellow", "green", "aquamarine",  "blue", "purple", "pink", "black" ,};*/
-        String[] colors = returnColorsTimes(7);
+
+        String[] colors;
+        if (order.equals("random")) {
+            colors = returnColorsTimes(7);
+            lines = makeRandomLines(colors);
+        } else {
+            colors = returnReverseColorsTimes(7);
+            lines = makeLinesInOrder(colors);
+        }
+
         String[] worstCaseColors = { "black", "black", "pink", "pink", "blue", "blue", "green", "green", "yellow",
                 "yellow", "orange", "orange", "red", "red" };
 
         int pixelsBetweenLines = SortingVisualizer.WINDOW_HEIGHT / (colors.length + 1);
-        lines = makeRandomLines(colors);
         tempLines = copyArrayList(lines);
 
         int totalSwaps = 0;
@@ -540,21 +500,20 @@ public class Sorts {
     }
 
     public static ArrayList<Line> cocktailSort() {
+        String order = (String) Panel.sortOrder.getSelectedItem();
+
         ArrayList<Line> lines = new ArrayList<Line>();
         ArrayList<Line> tempLines = new ArrayList<Line>();
 
-        String[] colors = { "red", "orange", "yellow", "green", "blue", "pink", "black", "red", "orange", "yellow",
-                "green", "blue", "pink", "black", "red", "orange", "yellow", "green", "blue", "pink", "black" };
+        String[] colors;
+        if (order.equals("random")) {
+            colors = returnColorsTimes(5);
+            lines = makeRandomLines(colors);
+        } else {
+            colors = returnReverseColorsTimes(5);
+            lines = makeLinesInOrder(colors);
+        }
 
-        // String[] colors = { "red", "orange", "yellow", "green", "blue", "pink",
-        // "black" };
-
-        /*String[] worstCaseColors = { "black", "gray", "pink", "purple", "blue", "aquamarine", "green", "yellow", "orange", "red",
-        		"black", "gray", "pink", "purple", "blue", "aquamarine", "green", "yellow", "orange", "red",
-        		"black", "gray", "pink", "purple", "blue", "aquamarine", "green", "yellow", "orange", "red",
-        		"black", "gray", "pink", "purple", "blue", "aquamarine", "green", "yellow", "orange", "red",
-        		"black", "gray", "pink", "purple", "blue", "aquamarine", "green", "yellow", "orange", "red",
-        		"black", "gray", "pink", "purple", "blue", "aquamarine", "green", "yellow", "orange", "red",};*/
         String[] worstCaseColors = { "black", "black", "black", "black", "gray", "gray", "gray", "gray",
                 "pink", "pink", "pink", "pink", "purple", "purple", "purple", "purple", "blue", "blue",
                 "blue", "blue", "green", "aquamarine", "aquamarine", "aquamarine", "aquamarine",
@@ -563,7 +522,6 @@ public class Sorts {
 
         // String[] colors = { "red", "orange", "green", "blue" };
         int pixelsBetweenLines = SortingVisualizer.WINDOW_HEIGHT / (colors.length + 1);
-        lines = makeLinesInOrder(worstCaseColors);
         tempLines = copyArrayList(lines);
 
         int totalSwaps = 0;
@@ -683,33 +641,25 @@ public class Sorts {
     }
 
     public static ArrayList<Line> selectionSort() {
+        String order = (String) Panel.sortOrder.getSelectedItem();
+
         ArrayList<Line> lines = new ArrayList<Line>();
         ArrayList<Line> tempLines = new ArrayList<Line>();
 
-        /*
-         * String[] colors = { "red", "red", "orange", "orange", "yellow", "yellow",
-         * "green", "green", "blue", "blue", "pink", "pink", "black", "black" };
-         */
-        // String[] colors = { "red", "orange", "yellow", "green", "blue", "pink",
-        // "black" };
-        /*String[] colors = { "red", "orange", "yellow", "green", "aquamarine",  "blue", "purple", "pink", "gray", "black",
-        		 "red", "orange", "yellow", "green", "aquamarine",  "blue", "purple", "pink", "gray", "black",
-        		 "red", "orange", "yellow", "green", "aquamarine",  "blue", "purple", "pink", "gray", "black",
-        		 "red", "orange", "yellow", "green", "aquamarine",  "blue", "purple", "pink", "gray", "black",
-        		 "red", "orange", "yellow", "green", "aquamarine",  "blue", "purple", "pink", "gray", "black",
-        		 "red", "orange", "yellow", "green", "aquamarine",  "blue", "purple", "pink", "gray", "black",
-        		 "red", "orange", "yellow", "green", "aquamarine",  "blue", "purple", "pink", "gray", "black",
-        		 "red", "orange", "yellow", "green", "aquamarine",  "blue", "purple", "pink", "gray", "black",
-         		};*/
-        String[] colors = returnColorsTimes(8);
-        /*
+        String[] colors;
+        if (order.equals("random")) {
+            colors = returnColorsTimes(8);
+            lines = makeRandomLines(colors);
+        } else {
+            colors = returnReverseColorsTimes(8);
+            lines = makeLinesInOrder(colors);
+        }      /*
          * String[] worstCaseColors = { "black", "black", "pink", "pink", "blue",
          * "blue", "green", "green", "yellow", "yellow", "orange", "orange", "red",
          * "red" };
          */
         // String[] colors = { "red", "orange", "green", "blue" };
         int pixelsBetweenLines = SortingVisualizer.WINDOW_HEIGHT / (colors.length + 1);
-        lines = makeRandomLines(colors);
         tempLines = copyArrayList(lines);
 
         int totalSwaps = 0;
@@ -793,25 +743,19 @@ public class Sorts {
     }
 
     public static ArrayList<Line> insertionSort() {
+        String order = (String) Panel.sortOrder.getSelectedItem();
+
         ArrayList<Line> lines = new ArrayList<Line>();
         ArrayList<Line> tempLines = new ArrayList<Line>();
 
-        /*
-         * String[] colors = { "red", "red", "orange", "orange", "yellow", "yellow",
-         * "green", "green", "blue", "blue", "pink", "pink", "black", "black" };
-         */
-
-       /* String[] colors = { "red", "orange", "yellow", "green", "aquamarine",  "blue", "purple", "pink", "gray", "black",
-                "red", "orange", "yellow", "green", "aquamarine",  "blue", "purple", "pink", "gray", "black",
-                "red", "orange", "yellow", "green", "aquamarine",  "blue", "purple", "pink", "gray", "black",
-                "red", "orange", "yellow", "green", "aquamarine",  "blue", "purple", "pink", "gray", "black",
-                "red", "orange", "yellow", "green", "aquamarine",  "blue", "purple", "pink", "gray", "black",
-                "red", "orange", "yellow", "green", "aquamarine",  "blue", "purple", "pink", "gray", "black",
-                "red", "orange", "yellow", "green", "aquamarine",  "blue", "purple", "pink", "gray", "black",
-                "red", "orange", "yellow", "green", "aquamarine",  "blue", "purple", "pink", "gray", "black",
-        };*/
-        String[] colors = returnColorsTimes(7);
-
+        String[] colors;
+        if (order.equals("random")) {
+            colors = returnColorsTimes(8);
+            lines = makeRandomLines(colors);
+        } else {
+            colors = returnReverseColorsTimes(8);
+            lines = makeLinesInOrder(colors);
+        }
         /*
          * String[] colors = { "red", "orange", "yellow", "green", "blue", "pink",
          * "black" };
@@ -821,7 +765,6 @@ public class Sorts {
         // "yellow", "orange", "orange", "red", "red" };
 
         int pixelsBetweenLines = SortingVisualizer.WINDOW_HEIGHT / (colors.length + 1);
-        lines = makeRandomLines(colors);
         tempLines = copyArrayList(lines);
 
         int totalSwaps = 0;
@@ -968,19 +911,20 @@ public class Sorts {
 
     public static ArrayList<Line> bubbleSort() { // Goes through the list, looks at each index and the subsequent one,
         // compares them, and switches if needed
+        String order = (String) Panel.sortOrder.getSelectedItem();
+
         ArrayList<Line> lines = new ArrayList<Line>();
         ArrayList<Line> tempLines = new ArrayList<Line>();
 
-        /*String[] colors = { "red", "orange", "yellow", "green", "aquamarine", "blue", "purple", "pink", "black",
-                "red", "orange", "yellow", "green", "aquamarine", "blue", "purple", "pink", "black" ,
-                "red", "orange", "yellow", "green", "aquamarine", "blue", "purple", "pink", "black" ,
-                "red", "orange", "yellow", "green", "aquamarine", "blue", "purple", "pink", "black" ,
-                "red", "orange", "yellow", "green", "aquamarine", "blue", "purple", "pink", "black"  ,
-                "red", "orange", "yellow", "green", "aquamarine", "blue", "purple", "pink", "black" ,
-                "red", "orange", "yellow", "green", "aquamarine", "blue", "purple", "pink", "black",
-                "red", "orange", "yellow", "green", "aquamarine", "blue", "purple", "pink", "black",
-                "red", "orange", "yellow", "green", "aquamarine", "blue", "purple", "pink", "black"};*/
-        String[] colors = returnColorsTimes(3);
+
+        String[] colors;
+        if (order.equals("random")) {
+            colors = returnColorsTimes(5);
+            lines = makeRandomLines(colors);
+        } else {
+            colors = returnReverseColorsTimes(5);
+            lines = makeLinesInOrder(colors);
+        }
         // String[] colors = { "red", "red", "orange", "orange", "yellow", "yellow",
         // "green", "green", "blue", "blue",
         // "pink", "pink", "black", "black" };
@@ -991,7 +935,6 @@ public class Sorts {
 
         int pixelsBetweenLines = SortingVisualizer.WINDOW_HEIGHT / (colors.length + 1);
 
-        lines = makeRandomLines(colors);
         tempLines = copyArrayList(lines);
 
         int totalSwaps = 0;
@@ -1116,6 +1059,16 @@ public class Sorts {
                     new Line(stringToColor(colors[i]), stringToInt(colors[i]), 0, pixelsBetweenLines * (i + 1), LINE_WIDTH));
         }
         return returnList;
+    }
+
+    public static String[] returnReverseColorsTimes(int times) {
+        String[] returnColors = new String[COLORS.length * times];
+        for (int i = 0; i < COLORS.length; i++) {
+            for (int j = 0; j < times; j++) {
+                returnColors[times * i + j] = COLORS[COLORS.length - i - 1];
+            }
+        }
+        return returnColors;
     }
 
     public static String[] returnColorsTimes(int times) {
