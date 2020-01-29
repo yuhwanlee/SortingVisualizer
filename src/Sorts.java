@@ -10,7 +10,7 @@ public class Sorts {
     public static final String[] COLORS = {"red", "orange", "yellow", "green", "darkGreen",
             "aquamarine", "blue", "purple", "pink", "gray", "black"};
 
-    public static ArrayList<Line> combSort() {
+    public static ArrayList<Line> combSort(int lineSets) {
         String order = (String) Panel.sortOrder.getSelectedItem();
 
         ArrayList<Line> lines = new ArrayList<Line>();
@@ -18,10 +18,10 @@ public class Sorts {
 
         String[] colors;
         if (order.equals("random")) {
-            colors = returnColorsTimes(5);
+            colors = returnColorsTimes(lineSets);  //5
             lines = makeRandomLines(colors);
         } else {
-            colors = returnReverseColorsTimes(5);
+            colors = returnReverseColorsTimes(lineSets);
             lines = makeLinesInOrder(colors);
         }
 
@@ -120,7 +120,7 @@ public class Sorts {
     }
 
 
-    public static ArrayList<Line> mergeSort() {
+    public static ArrayList<Line> mergeSort(int lineSets) {
         String order = (String) Panel.sortOrder.getSelectedItem();
 
         ArrayList<Line> lines = new ArrayList<Line>();
@@ -128,11 +128,11 @@ public class Sorts {
 
         String[] colors;
 
-        if (order.equals("random")) {
-            colors = returnColorsTimes(8);  // TODO: crashes at 9
+        if (order.equals("random")) { /// was 5
+            colors = returnColorsTimes(lineSets);   // TODO: crashes at 9
             lines = makeRandomLines(colors);
         } else {
-            colors = returnReverseColorsTimes(8);
+            colors = returnReverseColorsTimes(lineSets);
             lines = makeLinesInOrder(colors);
         }
         int pixelsBetweenLines = SortingVisualizer.WINDOW_HEIGHT / (colors.length + 1);
@@ -160,6 +160,7 @@ public class Sorts {
 
             }
         }
+        System.out.println(mergeSortSwitches);
         pixelsBetweenSwitch = SortingVisualizer.WINDOW_WIDTH / mergeSortSwitches;
         System.out.println("pixelsBetweenSwitch: " + pixelsBetweenSwitch);
         int additionalIndex = SortingVisualizer.WINDOW_WIDTH % pixelsBetweenSwitch == 0 ? 0 : 1;
@@ -195,6 +196,7 @@ public class Sorts {
     		line.duplicateLastYValue();
     	}*/
         // done in case rounding errors at the end gives an error
+        System.out.println("HERE TWICE !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 
         for (Line line : lines) {
             line.setXValues(xValues);
@@ -204,10 +206,13 @@ public class Sorts {
             }
             line.setCurrentXPixel(0);
         }
+        System.out.println("HERE TWICE !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         for (Line line : lines) {
             System.out.println("FINAL LINE: " + line);
         }
-
+        mergeSortSwitches = 0;  // TODO
+        firstMergeSort = true;
+        mergeIndexOfX = 1;
         return lines;
     }
 
@@ -371,7 +376,7 @@ public class Sorts {
         array[index2] = temp;
     }
 
-    public static ArrayList<Line> gnomeSort() {  // TODO: gnome sort reverse doesn't work
+    public static ArrayList<Line> gnomeSort(int lineSets) {  // TODO: gnome sort reverse doesn't work
         String order = (String) Panel.sortOrder.getSelectedItem();
 
         ArrayList<Line> lines = new ArrayList<Line>();
@@ -379,10 +384,10 @@ public class Sorts {
 
         String[] colors;
         if (order.equals("random")) {
-            colors = returnColorsTimes(7);
+            colors = returnColorsTimes(lineSets);  //4
             lines = makeRandomLines(colors);
         } else {
-            colors = returnReverseColorsTimes(7);
+            colors = returnReverseColorsTimes(lineSets);
             lines = makeLinesInOrder(colors);
         }
 
@@ -499,7 +504,7 @@ public class Sorts {
         return lines;
     }
 
-    public static ArrayList<Line> cocktailSort() {
+    public static ArrayList<Line> cocktailSort(int lineSets) {
         String order = (String) Panel.sortOrder.getSelectedItem();
 
         ArrayList<Line> lines = new ArrayList<Line>();
@@ -507,10 +512,10 @@ public class Sorts {
 
         String[] colors;
         if (order.equals("random")) {
-            colors = returnColorsTimes(5);
+            colors = returnColorsTimes(lineSets); // 4
             lines = makeRandomLines(colors);
         } else {
-            colors = returnReverseColorsTimes(5);
+            colors = returnReverseColorsTimes(lineSets);
             lines = makeLinesInOrder(colors);
         }
 
@@ -640,7 +645,7 @@ public class Sorts {
         return lines;
     }
 
-    public static ArrayList<Line> selectionSort() {
+    public static ArrayList<Line> selectionSort(int lineSets) {
         String order = (String) Panel.sortOrder.getSelectedItem();
 
         ArrayList<Line> lines = new ArrayList<Line>();
@@ -648,10 +653,10 @@ public class Sorts {
 
         String[] colors;
         if (order.equals("random")) {
-            colors = returnColorsTimes(8);
+            colors = returnColorsTimes(lineSets);  //8
             lines = makeRandomLines(colors);
         } else {
-            colors = returnReverseColorsTimes(8);
+            colors = returnReverseColorsTimes(lineSets);
             lines = makeLinesInOrder(colors);
         }      /*
          * String[] worstCaseColors = { "black", "black", "pink", "pink", "blue",
@@ -742,7 +747,7 @@ public class Sorts {
         return lines;
     }
 
-    public static ArrayList<Line> insertionSort() {
+    public static ArrayList<Line> insertionSort(int lineSets) {
         String order = (String) Panel.sortOrder.getSelectedItem();
 
         ArrayList<Line> lines = new ArrayList<Line>();
@@ -750,10 +755,10 @@ public class Sorts {
 
         String[] colors;
         if (order.equals("random")) {
-            colors = returnColorsTimes(8);
+            colors = returnColorsTimes(lineSets);  // 8
             lines = makeRandomLines(colors);
         } else {
-            colors = returnReverseColorsTimes(8);
+            colors = returnReverseColorsTimes(lineSets);
             lines = makeLinesInOrder(colors);
         }
         /*
@@ -909,7 +914,7 @@ public class Sorts {
         return lines;
     }
 
-    public static ArrayList<Line> bubbleSort() { // Goes through the list, looks at each index and the subsequent one,
+    public static ArrayList<Line> bubbleSort(int lineSets) { // Goes through the list, looks at each index and the subsequent one,
         // compares them, and switches if needed
         String order = (String) Panel.sortOrder.getSelectedItem();
 
@@ -919,10 +924,10 @@ public class Sorts {
 
         String[] colors;
         if (order.equals("random")) {
-            colors = returnColorsTimes(5);
+            colors = returnColorsTimes(lineSets);  //4
             lines = makeRandomLines(colors);
         } else {
-            colors = returnReverseColorsTimes(5);
+            colors = returnReverseColorsTimes(lineSets);
             lines = makeLinesInOrder(colors);
         }
         // String[] colors = { "red", "red", "orange", "orange", "yellow", "yellow",
@@ -1195,5 +1200,6 @@ public class Sorts {
     }
 
 }
+
 
 

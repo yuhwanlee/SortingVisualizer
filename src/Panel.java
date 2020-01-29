@@ -10,6 +10,9 @@ class Panel extends JPanel {
     private String[] sorts = {"Sort", "bubbleSort", "insertionSort", "selectionSort", "cocktailSort", "gnomeSort", "mergeSort", "combSort"};
     public static JComboBox sortOrder;
     private String[] orders = {"random", "reverse"};
+    public static JLabel recommendation;
+    private static JLabel lineNumberLabel;
+    public static JTextField lineNumberInput;
 
 
     public Panel(/*ArrayList<Line> lines*/) {
@@ -24,10 +27,27 @@ class Panel extends JPanel {
 
         sortsBox = new JComboBox(sorts);
         sortsBox.addActionListener(listener);
+        //sortsBox.addActionListener(new Listener());
+
         this.add(sortsBox);
         sortOrder = new JComboBox(orders);
         sortOrder.addActionListener(listener);
+        //sortOrder.addActionListener(new Listener());
+
         this.add(sortOrder);
+
+        recommendation = new JLabel();
+        recommendation.setText("The first sort is always the slowest");
+
+        this.add(recommendation);  // TODO: set position of recommendation
+
+        lineNumberLabel = new JLabel("| # of sets of lines:");
+        lineNumberInput = new JTextField(2);
+        lineNumberInput.setActionCommand("number");
+        lineNumberInput.addActionListener(listener);
+
+        this.add(lineNumberLabel);
+        this.add(lineNumberInput);
 
         frame.add(this);
         // graphFrame.setSize(new Dimension(windowSizeX, windowSizeY));
@@ -37,6 +57,20 @@ class Panel extends JPanel {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
+    public static void setAllVisible() {
+        sortsBox.setVisible(true);
+        sortOrder.setVisible(true);
+        recommendation.setVisible(true);
+        lineNumberLabel.setVisible(true);
+        lineNumberInput.setVisible(true);
+    }
+    public static void setAllInvisible() {
+        sortsBox.setVisible(false);
+        sortOrder.setVisible(false);
+        recommendation.setVisible(false);
+        lineNumberLabel.setVisible(false);
+        lineNumberInput.setVisible(false);
+    }
 
     /*public void setLines(ArrayList<Line> lines) {
         this.lines = lines;
@@ -133,7 +167,14 @@ class Panel extends JPanel {
             // } else {
             // diagonal = yPixelChanges[highestIndex] != yPixelChanges[highestIndex + 1];
             // }
-            boolean diagonal = yPixelChanges[highestIndex] != yPixelChanges[highestIndex + 1];
+            boolean diagonal;
+            if (highestIndex + 1 == yPixelChanges.length){  // TODO: CHECK IF THIS WORKS
+                diagonal = false;
+            } else {
+                diagonal = yPixelChanges[highestIndex] != yPixelChanges[highestIndex + 1];
+            }
+
+
             if (diagonal) {
                 drawPartialDiagonal(g, xPixelChanges[highestIndex], xPixelChanges[highestIndex + 1],
                         yPixelChanges[highestIndex], yPixelChanges[highestIndex + 1], currentX, i);
@@ -202,4 +243,6 @@ class Panel extends JPanel {
 
     }
 }
+
+
 

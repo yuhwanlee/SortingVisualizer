@@ -478,11 +478,10 @@ public class SortingVisualizer {
     }
 
     public static void main(String[] args) {
-        Panel panel = new Panel();
-
         SortingVisualizer obj = new SortingVisualizer();
 
     }
 }
+
 
 
