@@ -13,19 +13,18 @@ public class Sorts {
     public static ArrayList<Line> combSort(int lineSets) {
         String order = (String) Panel.sortOrder.getSelectedItem();
 
-        ArrayList<Line> lines = new ArrayList<Line>();
-        ArrayList<Line> tempLines = new ArrayList<Line>();
+        ArrayList<Line> lines;
+        ArrayList<Line> tempLines;
 
         String[] colors;
         if (order.equals("random")) {
-            colors = returnColorsTimes(lineSets);  //5
+            colors = returnColorsTimes(lineSets);
             lines = makeRandomLines(colors);
         } else {
             colors = returnReverseColorsTimes(lineSets);
             lines = makeLinesInOrder(colors);
         }
 
-        int pixelsBetweenLines = SortingVisualizer.WINDOW_HEIGHT / (colors.length + 1);
         tempLines = copyArrayList(lines);
 
         int totalSwaps = 0;
@@ -37,7 +36,7 @@ public class Sorts {
                 gap /= 1.3;
             }
             swaps = 0;
-            for (int i = 0; i < tempLines.size() - gap/* + 1*/; i++) {
+            for (int i = 0; i < tempLines.size() - gap; i++) {
                 if (tempLines.get(i).getColorVal() > tempLines.get(i + gap).getColorVal()) {
                     swap(tempLines, i, i + gap);
                     swaps++;
@@ -112,9 +111,6 @@ public class Sorts {
                 line.addYValue(line.getLastYValue());
             }
         }
-        for (Line line : lines) {
-            System.out.println(line);
-        }
 
         return lines;
     }
@@ -139,13 +135,8 @@ public class Sorts {
         tempLines = copyArrayList(lines);
 
 
-        for (Line line: lines) {
-            System.out.println(line);
-        }
-
         tempLines = lineMergeSort(tempLines, 0, tempLines.size() - 1);
-        //WPORKW TIH HTHIS :TODO
-        //mergeSortSwitches++;
+
         firstMergeSort = false;
         // this first time through is done to only determine the pixels between each
         // switch
@@ -160,9 +151,7 @@ public class Sorts {
 
             }
         }
-        System.out.println(mergeSortSwitches);
         pixelsBetweenSwitch = SortingVisualizer.WINDOW_WIDTH / mergeSortSwitches;
-        System.out.println("pixelsBetweenSwitch: " + pixelsBetweenSwitch);
         int additionalIndex = SortingVisualizer.WINDOW_WIDTH % pixelsBetweenSwitch == 0 ? 0 : 1;
         int[] xValues = new int[SortingVisualizer.WINDOW_WIDTH / pixelsBetweenSwitch + 1 + additionalIndex];
         int num = 0;
@@ -178,25 +167,12 @@ public class Sorts {
         if (!has1500) {
             xValues[xValues.length - 1] = SortingVisualizer.WINDOW_WIDTH;
         }
-        System.out.print("xValues: ");
-        printArray(xValues);
-        //printArray(xValues);
         // index of xPixel is the index of which # switch it is
         // actual sorting and proper pixel values
 
         lines = lineMergeSort(lines, 0, lines.size() - 1);
-        for (Line line: lines) {
-            System.out.println(line);
-        }
-  /*      for (Line line: lines) {
-    		int indexOfXBehind = mergeIndexOfX - line.getYValues().length - 1;
-    		for (int i = 0; i < indexOfXBehind; i++) {
-    			line.duplicateLastYValue();
-    		}
-    		line.duplicateLastYValue();
-    	}*/
+
         // done in case rounding errors at the end gives an error
-        System.out.println("HERE TWICE !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 
         for (Line line : lines) {
             line.setXValues(xValues);
@@ -206,10 +182,7 @@ public class Sorts {
             }
             line.setCurrentXPixel(0);
         }
-        System.out.println("HERE TWICE !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-        for (Line line : lines) {
-            System.out.println("FINAL LINE: " + line);
-        }
+
         mergeSortSwitches = 0;  // TODO
         firstMergeSort = true;
         mergeIndexOfX = 1;
@@ -278,11 +251,9 @@ public class Sorts {
             }
             yValues = selectionSortIntArray(yValues);
         }
-        System.out.print("yValues: ");printArray(yValues);
         ArrayList<Line> returnList = new ArrayList<Line>();
         int lowerCounter = 0;
         int higherCounter = 0;
-        //System.out.println("booleanIndex: " + booleanIndex);
         //boolean keepGoing = booleanIndex < incrementIndex.length;
         for (int i = 0; i < size/* && keepGoing*/; i++) {
             if (lowerCounter == lower.size()){
@@ -320,55 +291,11 @@ public class Sorts {
         //booleanIndex++;
         if (!firstMergeSort) {
             mergeIndexOfX++;
-
-	    	/*System.out.println("mergeIndexOfX: " + mergeIndexOfX);
-	    	for (Line line: returnList) {
-	    		System.out.println(line);
-	    	}
-	    	int[] newColorOrder = new int[size];
-	    	boolean increment = true;
-	    	for (int i = 0; i < returnList.size(); i++) {
-	    		newColorOrder[i] = returnList.get(i).getColorVal();
-	    		if (newColorOrder[i] == originalColorOrder[i]) {
-	    			increment = false;
-	    		}
-	    	}
-	    	if (increment) {
-	    		mergeIndexOfX++;
-	    	}*/
-        } else {
-    		/*int[] newColorOrder = new int[size];
-	    	boolean increment = true;
-	    	for (int i = 0; i < returnList.size(); i++) {
-	    		newColorOrder[i] = returnList.get(i).getColorVal();
-	    		if (newColorOrder[i] == originalColorOrder[i]) {
-	    			increment = false;
-	    		}
-	    	}
-	    	if (increment) {
-	    		mergeSortSwitches++;
-	    	}
-	    	incrementIndex = appendArray(incrementIndex, increment);
-	    	System.out.print("incrementIndex: "); printArray(incrementIndex);*/
         }
         return returnList;
     }
 
-    public static int[] selectionSortIntArray(int[] array) {
-        for (int i = 0; i < array.length - 1; i++) {
-            int lowestIndex = i;
-            for (int k = i + 1; k < array.length; k++) {
-                if (array[k] < array[lowestIndex]) {
-                    lowestIndex = k;
-                }
-            }
-            if (lowestIndex != i) {
-                swap(array, i, lowestIndex);
-            }
-        }
-        //System.out.println(swaps);
-        return array;
-    }
+
 
     public static void swap(int[] array, int index1, int index2) {
         int temp = array[index1];
@@ -376,25 +303,21 @@ public class Sorts {
         array[index2] = temp;
     }
 
-    public static ArrayList<Line> gnomeSort(int lineSets) {  // TODO: gnome sort reverse doesn't work
+    public static ArrayList<Line> gnomeSort(int lineSets) {
         String order = (String) Panel.sortOrder.getSelectedItem();
 
-        ArrayList<Line> lines = new ArrayList<Line>();
-        ArrayList<Line> tempLines = new ArrayList<Line>();
+        ArrayList<Line> lines;
+        ArrayList<Line> tempLines;
 
         String[] colors;
         if (order.equals("random")) {
-            colors = returnColorsTimes(lineSets);  //4
+            colors = returnColorsTimes(lineSets);
             lines = makeRandomLines(colors);
         } else {
             colors = returnReverseColorsTimes(lineSets);
             lines = makeLinesInOrder(colors);
         }
 
-        String[] worstCaseColors = { "black", "black", "pink", "pink", "blue", "blue", "green", "green", "yellow",
-                "yellow", "orange", "orange", "red", "red" };
-
-        int pixelsBetweenLines = SortingVisualizer.WINDOW_HEIGHT / (colors.length + 1);
         tempLines = copyArrayList(lines);
 
         int totalSwaps = 0;
@@ -432,8 +355,6 @@ public class Sorts {
         }
         pixelsBetweenSwitch = SortingVisualizer.WINDOW_WIDTH / totalSwaps;
 
-        int tempIndex1;
-        int tempIndex2;
         int tempYVal1;
         int tempYVal2;
         // index of xPixel is the index of which # switch it is
@@ -483,7 +404,6 @@ public class Sorts {
                         }
                     }
                     i--;
-
                 } else {
                     i++;
                 }
@@ -496,9 +416,6 @@ public class Sorts {
                 line.addXValue(SortingVisualizer.WINDOW_WIDTH);
                 line.addYValue(line.getLastYValue());
             }
-        }
-        for (Line line : lines) {
-            System.out.println(line);
         }
 
         return lines;
@@ -638,9 +555,6 @@ public class Sorts {
                 line.addYValue(line.getLastYValue());
             }
         }
-        for (Line line : lines) {
-            System.out.println(line);
-        }
 
         return lines;
     }
@@ -740,9 +654,6 @@ public class Sorts {
                 line.addYValue(line.getLastYValue());
             }
         }
-        for (Line line : lines) {
-            System.out.println(line);
-        }
 
         return lines;
     }
@@ -798,7 +709,6 @@ public class Sorts {
                 // sorted portion, nothing changes.
                 inserted = true;
             }
-            // printArray(sortedArray);
             if (!inserted) {
                 tempLines.remove(i);
                 tempLines.add(0, currentLine);
@@ -833,9 +743,7 @@ public class Sorts {
 
             Line currentLine = lines.get(i);
             int currentLastYValue = currentLine.getLastYValue();
-            // System.out.println("currentNum: " + currentNum);
             for (int k = 0; k < i; k++) {
-                // System.out.println(currentNum >= sortedArray[k]);
                 if (lines.get(k).getColorVal() > /* >= */currentColorVal && !inserted) {
                     int tempYVal = lines.get(k).getLastYValue();
 
@@ -862,17 +770,8 @@ public class Sorts {
 
                 }
             }
-            // System.out.println("inserted: " + inserted);
             // if currentNum is greater than everything in sorted list
             if (lines.get(i - 1).getColorVal() <= currentColorVal) {// if number is greater than everything in the
-                // sorted
-                // portion, nothing changes.
-
-                /*
-                 * for (int k = 0; k <= i; k++) {
-                 * lines.get(k).addYValue(lines.get(k).getLastYValue()); }
-                 */
-
                 inserted = true;
             }
 
@@ -896,7 +795,6 @@ public class Sorts {
                 indexOfX++;
 
             }
-            // printArray(sortedArray);
         }
         // done in case rounding errors at the end gives an error
 
@@ -907,9 +805,6 @@ public class Sorts {
             }
         }
 
-        for (Line line : lines) {
-            System.out.println(line);
-        }
 
         return lines;
     }
@@ -1015,9 +910,6 @@ public class Sorts {
                 line.addXValue(SortingVisualizer.WINDOW_WIDTH);
                 line.addYValue(line.getLastYValue());
             }
-        }
-        for (Line line : lines) {
-            System.out.println(line);
         }
 
         return lines;
@@ -1177,26 +1069,19 @@ public class Sorts {
         lines.set(index2, temp);
     }
 
-    public static void printArray(int[] arr) {
-        System.out.print("{");
-        for (int i = 0; i < arr.length - 1; i++) {
-            System.out.print(arr[i] + ", ");
+    public static int[] selectionSortIntArray(int[] array) {
+        for (int i = 0; i < array.length - 1; i++) {
+            int lowestIndex = i;
+            for (int k = i + 1; k < array.length; k++) {
+                if (array[k] < array[lowestIndex]) {
+                    lowestIndex = k;
+                }
+            }
+            if (lowestIndex != i) {
+                swap(array, i, lowestIndex);
+            }
         }
-        System.out.println(arr[arr.length - 1] + "}");
-    }
-    public static void printArray(String[] arr) {
-        System.out.print("{");
-        for (int i = 0; i < arr.length - 1; i++) {
-            System.out.print(arr[i] + ", ");
-        }
-        System.out.println(arr[arr.length - 1] + "}");
-    }
-    public static void printArray(boolean[] arr) {
-        System.out.print("{");
-        for (int i = 0; i < arr.length - 1; i++) {
-            System.out.print(arr[i] + ", ");
-        }
-        System.out.println(arr[arr.length - 1] + "}");
+        return array;
     }
 
 }

@@ -37,14 +37,6 @@ public class Line {
     public void setXValues(int[] allXValues) {
         int pixelsBetweenSwitch = Sorts.pixelsBetweenSwitch;
         currentXPixel = 0;
-        //int index = 0;
-    	/*for (int i = 0; i < xValues.length && currentXPixel <= 1500; i++) {
-    		if (xValues[i] != currentXPixel) {
-    			addXValue(i, currentXPixel);
-    			duplicateYValue(i);
-    		}
-    		currentXPixel += pixelsBetweenSwitch;
-    	}*/
         for (int i = 0; i < xValues.length && currentXPixel <= 1500; i++) {
             if (xValues[i] != currentXPixel) {
                 addXValue(i, currentXPixel);
@@ -52,33 +44,8 @@ public class Line {
             }
             currentXPixel += pixelsBetweenSwitch;
         }
-    	/*for (int i = 0; i < allXValues.length; i++) {
-    		if (xValues.length >= i) {
-    			addXValue(i, allXValues[i]);
-    			duplicateYValue(i - 1);
-    		} else if (xValues[i] != allXValues[i]) {
-    			addXValue(i, allXValues[i]);
-    			duplicateYValue(i - 1);
-    		}
-    	}*/
-        //xValues = allXValues;
     }
 
-    /*public static int[] testingSort() {
-    	int[] allXValues = {0, 300, 600, 900, 1200, 1500};
-    	int[] xValues = {0, 600, 1500};
-    	int[] yValues = {500, 800, 100};
-    	for (int i = 0; i < allXValues.length; i++) {
-    		System.out.print("i: " + i + "\nxValues: "); printArray(xValues); System.out.print("yValues: "); printArray(yValues);
-    		if (xValues[i] != allXValues[i]) {
-    			System.out.println("HERE");
-    			xValues = insertArrayIndex(xValues, i, allXValues[i]);
-    			yValues = duplicateYValue(yValues, i - 1);
-    		}
-    	}
-    	return xValues;
-
-    }*/
     public int getLastYValue() {
         return yValues[yValues.length - 1];
     }
@@ -115,33 +82,13 @@ public class Line {
     public void duplicateLastYValue() {
         yValues = appendArray(yValues, getLastYValue());
     }
-    /*
-     * public int[] getXPixelsAtChanges() { return xPixelsAtChanges; }
-     *
-     * public int[] getPreviousYPixels() { return previousYPixels; }
-     */
+
 
     public void addXValue(int addition) {
         xValues = appendArray(xValues, addition);
 
     }
-    public static void main(String[] args) {
-        Line line = new Line(Color.RED, 0, 500, 5);
-        line.xValues = new int[] {0, 300, 800};
-        line.yValues = new int[] {700, 200, 400};
-        line.addXValue(1, 200);
-        line.duplicateYValue(2);
-        printArray(line.xValues);
-        printArray(line.yValues);
-    }
 
-    public static void printArray(int[] arr) {
-        System.out.print("{");
-        for (int i = 0; i < arr.length - 1; i++) {
-            System.out.print(arr[i] + ", ");
-        }
-        System.out.println(arr[arr.length - 1] + "}");
-    }
     public void addXValue(int index, int addition) {
         int[] returnArray = new int[xValues.length + 1];
         for (int i = 0; i < index; i++) {
@@ -153,10 +100,6 @@ public class Line {
         }
         xValues = returnArray;
     }
-
-    // public void addXPixelChange(int addition) {
-    // xPixelsAtChanges = appendArray(xPixelsAtChanges, addition);
-    // }
 
     public void addYValue(int addition) {
         yValues = appendArray(yValues, addition);
@@ -174,10 +117,6 @@ public class Line {
         }
         yValues = returnArray;
     }
-
-    // public void addPreviousYPixels(int addition) {
-    // previousYPixels = appendArray(previousYPixels, addition);
-    // }
 
     public void setPixelWidth(int pixelWidth) {
         this.pixelWidth = pixelWidth;
